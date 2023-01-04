@@ -1,0 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    transform: all .5 ease-in-out;
+}
+
+body {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+}
