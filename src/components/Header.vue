@@ -17,7 +17,7 @@
         </div>
         <div class="flex items-center">
             <img class="w-6 h-6 cursor-pointer" src="../assets/github.svg"
-                @click="openUrl('https://github.com/printfCYQ')" />
+                @click="openUrl('https://github.com/printfCYQ/vue3-message-board-client.git')" />
             <div :class="appStore.theme ? 'i-ic:round-dark-mode' : 'i-ic:baseline-wb-sunny'"
                 class=" text-2xl text-yellow-400 cursor-pointer ml-5" @click="appStore.toggleTheme" />
             <div class="i-ic:round-power-settings-new ml-5 text-3xl  text-blue-600 dark:text-white cursor-pointer"
