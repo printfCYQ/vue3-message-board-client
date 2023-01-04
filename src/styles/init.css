@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    transform: all .5 ease-in-out;
+    transition: all .5 ease-in-out;
 }
 
 body {
