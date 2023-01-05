@@ -1,5 +1,5 @@
 <template>
-    <div class="m-h-45  flex justify-center items-start bg-gray-900 px-50 py-10">
+    <div ref="footer" class="h-45  flex justify-center items-start bg-gray-900 px-50 py-10 z-20 sticky">
         <div class="flex-1 pr-20">
             <div class="flex items-center ">
                 <div class="i-ic:round-message  text-4xl text-blue-600" />
@@ -11,7 +11,9 @@
         <div class="flex-1 pr-20">
             <div class="text-gray-500 text-lg">链接</div>
             <div class="text-gray-500 text-xs mt-4 cursor-pointer hover:text-white"
-                @click="openUrl('https://github.com/printfCYQ')">Github</div>
+                @click="openUrl('https://github.com/printfCYQ')">我的Github</div>
+            <div class="text-gray-500 text-xs mt-2 cursor-pointer hover:text-white"
+                @click="openUrl('https://www.huohuo90.com:3002/#/')">参考项目（UI）</div>
         </div>
         <div class="flex-1">
             <div class="text-gray-500 text-lg">打赏</div>
@@ -30,7 +32,28 @@
 </template>
 
 <script setup lang="ts">
+import { useElementVisibility } from '@vueuse/core';
+import { getCurrentInstance } from 'vue';
+import { useRouter } from 'vue-router';
+const instance = getCurrentInstance()
+const { currentRoute } = useRouter();
+const footer = ref(null)
+
+window.onscroll = () => {
+    getFooterVisible()
+}
+
+watch(() => currentRoute.value, (nV, oV) => {
+    getFooterVisible()
+})
+
+const getFooterVisible = () => {
+    const targetIsVisible = useElementVisibility(footer) // 判断元素是否在可视范围
+    instance?.proxy?.$Bus.emit('show-footer', targetIsVisible.value)
+}
+
 const openUrl = (url: string) => {
     window.open(url)
 }
+
 </script>

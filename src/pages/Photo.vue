@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-center">
+    <div class="flex items-center justify-center z-20 sticky">
         <n-spin class="mt-50" size="large" />
     </div>
 </template>

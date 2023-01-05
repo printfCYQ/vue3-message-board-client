@@ -7,9 +7,16 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AddMessageBtn: typeof import('./src/components/AddMessageBtn.vue')['default']
+    AddMessageForm: typeof import('./src/components/AddMessageForm.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
     MessageCard: typeof import('./src/components/MessageCard.vue')['default']
+    MessageDetail: typeof import('./src/components/MessageDetail.vue')['default']
+    NButton: typeof import('naive-ui')['NButton']
+    NDrawer: typeof import('naive-ui')['NDrawer']
+    NDrawerContent: typeof import('naive-ui')['NDrawerContent']
+    NInput: typeof import('naive-ui')['NInput']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NSpin: typeof import('naive-ui')['NSpin']
     RouterLink: typeof import('vue-router')['RouterLink']

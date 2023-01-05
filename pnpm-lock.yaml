@@ -9,6 +9,7 @@ specifiers:
   '@vitejs/plugin-vue-jsx': ^2.1.1
   '@vueuse/core': ^9.6.0
   axios: ^1.2.0
+  mitt: ^3.0.0
   mockjs: ^1.1.0
   naive-ui: ^2.34.3
   nprogress: ^0.2.0
@@ -27,6 +28,7 @@ specifiers:
 
 dependencies:
   '@vueuse/core': 9.6.0_vue@3.2.45
+  mitt: 3.0.0
   nprogress: 0.2.0
   pinia: 2.0.27_prq2uz4lho2pwp6irk4cfkrxwu
   pinia-plugin-persistedstate: 3.0.1_pinia@2.0.27
@@ -1784,6 +1786,10 @@ packages:
     dependencies:
       brace-expansion: 2.0.1
     dev: true
+
+  /mitt/3.0.0:
+    resolution: {integrity: sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ==}
+    dev: false
 
   /mlly/1.0.0:
     resolution: {integrity: sha512-QL108Hwt+u9bXdWgOI0dhzZfACovn5Aen4Xvc8Jasd9ouRH4NjnrXEiyP3nVvJo91zPlYjVRckta0Nt2zfoR6g==}

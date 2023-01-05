@@ -5,7 +5,7 @@
             <div class="i-ic:round-message cursor-pointer text-4xl text-blue-600 dark:text-white" />
             <div class="ml-2 font-semibold text-lg text-gray-900 dark:text-white">CYQ时光</div>
         </div>
-        <div class="flex" style="transform: translateX(-25%);">
+        <div class="flex" style="transform: translateX(-18px);">
             <div :class="route.path === '/' ? ['bg-blue-600', 'text-white', 'font-normal'] : ['font-medium']"
                 class="mr-3 py-2 px-5 rounded-full cursor-pointer dark:text-white text-sm" @click="Navto('/')">
                 留言墙
