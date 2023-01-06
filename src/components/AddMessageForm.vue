@@ -1,5 +1,5 @@
 <template>
-    <n-drawer class="mt-13" v-model:show="show" :width="400" :theme="appStore.theme ? '' : darkTheme">
+    <n-drawer v-model:show="show" :width="400" :theme="appStore.theme ? '' : darkTheme">
         <n-drawer-content class="drawer-content" title="留言" closable :native-scrollbar="false" :body-content-style="{
             padding: 0
         }">

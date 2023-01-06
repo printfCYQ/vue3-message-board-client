@@ -21,6 +21,7 @@
         <Footer></Footer>
         <AddMessageBtn></AddMessageBtn>
         <AddMessageForm></AddMessageForm>
+        <LoginForm></LoginForm>
     </div>
 </template>
 

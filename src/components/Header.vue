@@ -29,8 +29,10 @@
 
 <script setup lang="ts">
 import { useAppStore } from '@/store/index';
+import { useMessage } from 'naive-ui';
+import { getCurrentInstance } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useMessage } from 'naive-ui'
+const instance = getCurrentInstance()
 const appStore = useAppStore()
 const router = useRouter()
 const route = useRoute()
@@ -44,6 +46,7 @@ const openUrl = (url: string) => {
     window.open(url)
 }
 const login = () => {
-    message.warning('正在开发～')
+    // message.warning('正在开发～')
+    instance?.proxy?.$Bus.emit('show-login-form')
 }
 </script>

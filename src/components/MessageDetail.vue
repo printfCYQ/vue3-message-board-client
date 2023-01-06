@@ -1,5 +1,5 @@
 <template>
-    <n-drawer class="mt-13" v-model:show="show" :width="400" :theme="appStore.theme ? '' : darkTheme">
+    <n-drawer v-model:show="show" :width="400" :theme="appStore.theme ? '' : darkTheme">
         <n-drawer-content class="drawer-content" title="详情" closable :native-scrollbar="false">
             <span class="mt-5 cursor-pointer hover:text-blue-500" @click="report">举报</span>
             <div :class="colorList[activeColor]" class=" p-6 mt-3 bg-opacity-20 cursor-pointer box-border">

@@ -1,6 +1,6 @@
 <template>
     <div :class="colorList[randomNum()]"
-        class="w-60 h-60 p-4 bg-opacity-20  'hover:bg-opacity-40', 'hover:-mt-2' transition-all duration-500 ease-in-out z-20 sticky">
+        class="w-60 h-60 p-4 bg-opacity-20  hover:bg-opacity-40 hover:-mt-2 transition-all duration-500 ease-in-out z-20 sticky">
         <div class="flex justify-between text-xs text-gray-400">
             <div>2022/12/28 18:41</div>
             <div>目标</div>
