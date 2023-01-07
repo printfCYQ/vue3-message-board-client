@@ -13,15 +13,15 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
   console.log(command);
   const prodMock = true;
   return defineConfig({
-    // server: {
-    //   proxy: {
-    //     "/dev": {
-    //       target: "http://localhost:5173/",
-    //       changeOrigin: false,
-    //       rewrite: (path) => path.replace(/^\/dev/, ""),
-    //     },
-    //   },
-    // },
+    server: {
+      proxy: {
+        "/dev": {
+          target: "http://localhost:3001/",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev/, ""),
+        },
+      },
+    },
     plugins: [
       vue(),
       vueJsx(),

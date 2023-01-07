@@ -1,6 +1,6 @@
 <template>
     <n-modal v-model:show="showModal" class="custom-card" preset="card" :style="bodyStyle" title="Login" size="huge"
-        :bordered="false" :segmented="segmented" :theme="appStore.theme ? '' : darkTheme">
+        :bordered="false" :segmented="segmented" :theme="appStore.theme ? {} : darkTheme" @after-leave="modalClose">
         <n-form ref="formRef" label-placement="left" label-align="left" :label-width="60" :model="loginForm"
             :rules="rules" :show-require-mark="false">
             <n-form-item label="邮箱" path="email">
@@ -23,7 +23,7 @@
         </div>
         <template #footer>
             <n-button class="w-full" attr-type="button" type="primary" :loading="loading" @click="loginSubmit">
-                登陆
+                登录
             </n-button>
         </template>
     </n-modal>
@@ -31,10 +31,10 @@
 </template>
 
 <script setup lang="ts">
-import { getCurrentInstance } from 'vue';
-import type { FormInst } from 'naive-ui';
 import { useAppStore } from '@/store/index';
+import type { FormInst } from 'naive-ui';
 import { darkTheme, useMessage } from 'naive-ui';
+import { getCurrentInstance } from 'vue';
 const message = useMessage()
 const appStore = useAppStore()
 const instance = getCurrentInstance()
@@ -70,9 +70,9 @@ let loading = ref<boolean>(false) // 按钮loading
 
 // 登陆表达form
 const loginForm = ref<any>({
-    email: 'admin@qq.com',
-    password: 'admin',
-    code: '1234'
+    email: '',
+    password: '',
+    code: '验证码假的，还没开发'
 })
 
 const showModal = ref(false)
@@ -83,9 +83,23 @@ const loginSubmit = (e: MouseEvent) => {
     formRef.value?.validate(async (errors) => {
         if (!errors) {
             loading.value = true
+            const res = await appStore.loginAction(loginForm.value)
+            if (res?.code === 200) {
+                message.success(res.message)
+                showModal.value = false
+            } else {
+                message.warning(res.message)
+            }
+            loading.value = false
         }
     })
     loading.value = false
+}
+
+const modalClose = () => {
+    console.log(123);
+    loginForm.value.email = ''
+    loginForm.value.password = ''
 }
 
 const openRegister = () => {

@@ -1,14 +1,14 @@
 <template>
-    <n-drawer v-model:show="show" :width="400" :theme="appStore.theme ? '' : darkTheme">
+    <n-drawer v-model:show="show" :width="400" :theme="appStore.theme ? {} : darkTheme">
         <n-drawer-content class="drawer-content" title="详情" closable :native-scrollbar="false">
             <span class="mt-5 cursor-pointer hover:text-blue-500" @click="report">举报</span>
-            <div :class="colorList[activeColor]" class=" p-6 mt-3 bg-opacity-20 cursor-pointer box-border">
+            <div :class="colorList[cardInfo.color]" class=" p-6 mt-3 bg-opacity-20 cursor-pointer box-border">
                 <div class="flex justify-between text-xs text-gray-400">
-                    <div>2022/12/28 18:41</div>
-                    <div>目标</div>
+                    <div> {{ formatTime(cardInfo.createTime) }}</div>
+                    <div>{{ typeList[cardInfo.type].text }}</div>
                 </div>
                 <div style="font-family: serif;" class="mt-2 h-56 text-sm dark:text-gray-400 text-gray-800">
-                    {{ messageContent }}
+                    {{ cardInfo.message }}
                 </div>
                 <div class="flex justify-between items-center dark:text-gray-400 text-gray-800">
                     <div class="flex items-center">
@@ -18,7 +18,7 @@
                         <div class="i-ic:baseline-mode-comment cursor-pointer text-base  text-gray-400 ml-2" />
                         <div class="ml-1 text-sm">{{ 2 }}</div>
                     </div>
-                    <div class="text-base font-light">匿名</div>
+                    <div class="text-base font-light">{{ cardInfo.user.userName }}</div>
                 </div>
             </div>
             <div class="mt-5">
@@ -53,10 +53,11 @@
 </template>
 
 <script setup lang="ts">
-// import { colorList } from '@/config';
+import { typeList } from '@/config';
 import { useAppStore } from '@/store/index';
+import { formatTime } from '@/utils';
 import { darkTheme, useMessage } from 'naive-ui';
- const colorList = [
+const colorList = [
     'bg-red-300',
     'bg-yellow-300',
     'bg-green-300',
@@ -69,25 +70,17 @@ const message = useMessage()
 const appStore = useAppStore()
 const show = ref<boolean>(false)
 const cardInfo = ref<any>({})
-const cardId = ref<number>(0)
-const activeColor = ref(0)
-const reMessage = ref('没人给我留言吗?')
-const messageContent = ref('没人给我留言吗?')
-const getInfoById = () => {
-    let id = cardId.value
-    let info = {}
-    cardInfo.value = info
-    show.value = true
-}
+const reMessage = ref('评论～')
 const report = () => {
     message.warning('正在开发～')
 }
+
 const submit = () => {
     message.warning('正在开发～')
 }
 
 defineExpose({
-    cardId,
-    getInfoById,
+    cardInfo,
+    show
 })
 </script>

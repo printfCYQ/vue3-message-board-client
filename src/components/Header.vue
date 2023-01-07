@@ -20,24 +20,31 @@
                 @click="openUrl('https://github.com/printfCYQ/vue3-message-board-client.git')" />
             <div :class="appStore.theme ? 'i-ic:round-dark-mode' : 'i-ic:baseline-wb-sunny'"
                 class=" text-2xl text-yellow-400 cursor-pointer ml-5" @click="appStore.toggleTheme" />
-            <div class="i-ic:round-power-settings-new ml-5 text-3xl  text-blue-600 dark:text-white cursor-pointer"
-                @click="login">
-            </div>
+
+            <n-button class="ml-5" icon-placement="right" secondary strong @click="loginOrLogout">
+                <template #icon>
+                    <div :class="appStore.userInfo.token === '' ? 'i-ic:baseline-login' : 'i-ic:round-power-settings-new'"
+                        class="text-3xl  text-blue-600 dark:text-white cursor-pointer">
+                    </div>
+                </template>
+                {{ appStore.userInfo.token === '' ? '登录' : `退出(${appStore?.userInfo?.userName})` }}
+            </n-button>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from '@/store/index';
-import { useMessage } from 'naive-ui';
+import { useMessage, useDialog } from 'naive-ui';
 import { getCurrentInstance } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+
 const instance = getCurrentInstance()
 const appStore = useAppStore()
 const router = useRouter()
 const route = useRoute()
 const message = useMessage()
-
+const dialog = useDialog()
 const Navto = (path: string) => {
     router.replace(path)
 }
@@ -45,8 +52,27 @@ const Navto = (path: string) => {
 const openUrl = (url: string) => {
     window.open(url)
 }
-const login = () => {
+const loginOrLogout = async () => {
     // message.warning('正在开发～')
-    instance?.proxy?.$Bus.emit('show-login-form')
+    console.log(appStore.userInfo.token);
+    if (appStore.userInfo.token === '') {
+        instance?.proxy?.$Bus.emit('show-login-form')
+    } else {
+        const d = dialog.warning({
+            title: '退出不能留言了a～！',
+            content: '确定退出？',
+            positiveText: '确定',
+            negativeText: '取消',
+            onPositiveClick: async () => {
+                d.loading = true
+                const res = await appStore.logoutAction()
+                if (res.code === 200) {
+                    message.success(res.message)
+                }
+            },
+        })
+
+    }
 }
+
 </script>

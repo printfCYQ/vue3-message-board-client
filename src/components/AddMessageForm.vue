@@ -1,5 +1,5 @@
 <template>
-    <n-drawer v-model:show="show" :width="400" :theme="appStore.theme ? '' : darkTheme">
+    <n-drawer v-model:show="show" :width="400" :theme="appStore.theme ? {} : darkTheme">
         <n-drawer-content class="drawer-content" title="留言" closable :native-scrollbar="false" :body-content-style="{
             padding: 0
         }">
@@ -19,7 +19,7 @@
                 <div class="mt-5">
                     <div class="text-gray-900 dark:text-white  pb-2">选择标签</div>
                     <div class="flex flex-wrap">
-                        <div :class="current === item.id ? ['bg-gray-900', 'dark:bg-white', 'rounded-full', 'font-semibold', 'text-white'] : ['text-gray-500']"
+                        <div :class="currentType === item.id ? ['bg-gray-900', 'dark:bg-white', 'rounded-full', 'font-semibold', 'text-white'] : ['text-gray-500']"
                             class="mx-1 mt-1 text-sm dark:text-gray-500 cursor-pointer py-1 px-2 transition duration-500 ease-out"
                             v-for="item in typeList" :key="item.id" @click="chooseItem(item.id)">
                             {{ item.text }}
@@ -57,9 +57,11 @@
 
 <script setup lang="ts">
 // import { colorList, typeList } from '@/config';
+import messageApi from '@/api/message';
 import { useAppStore } from '@/store/index';
 import { darkTheme, useMessage } from 'naive-ui';
-import { getCurrentInstance, ref } from 'vue';
+import { getCurrentInstance } from 'vue';
+
 const colorList = [
     'bg-red-300',
     'bg-yellow-300',
@@ -89,13 +91,13 @@ const message = useMessage()
 const show = ref<boolean>(false)
 const activeColor = ref<number>(0)
 const messageContent = ref<string>('')
-const current = ref<number>(0)
+const currentType = ref<number>(0)
 
 instance?.proxy?.$Bus.on('show-add-message-form', () => {
     show.value = true
 })
 const chooseItem = (item: number) => {
-    current.value = item
+    currentType.value = item
 }
 const chooseColor = (index: number) => {
     activeColor.value = index
@@ -105,9 +107,27 @@ const cancel = () => {
     show.value = false
     messageContent.value = ''
     activeColor.value = 0
-    current.value = 0
+    currentType.value = 0
 }
-const sure = () => {
-    message.warning('正在开发～')
+const sure = async () => {
+    if (messageContent.value === '') {
+        message.warning('请输入～')
+        return
+    }
+    const params = {
+        color: activeColor.value,
+        type: currentType.value,
+        message: messageContent.value
+    }
+    const res = await messageApi.addMessage(params)
+    console.log(res)
+    if (res?.code === 200) {
+        message.success(res.message)
+        show.value = false
+        instance?.proxy?.$Bus.emit('query-message-list')
+
+    } else {
+        message.warning(res.message)
+    }
 }
 </script>

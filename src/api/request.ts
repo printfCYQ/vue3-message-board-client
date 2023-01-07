@@ -1,4 +1,5 @@
 // import { useAppStore } from '@/store';
+import { useAppStore } from '@/store';
 import type { AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import NProgress from 'nprogress';
@@ -9,10 +10,10 @@ axios.defaults.timeout = 10000
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 axios.interceptors.request.use(
     (config): AxiosRequestConfig<any> => {
-        // const appStore = useAppStore()
-        // if (appStore.token && config.headers) {
-        //     config.headers["Authorization"] = "Bearer " + appStore.token;
-        // }
+        const appStore = useAppStore()
+        if (appStore.userInfo.token && config.headers) {
+            config.headers["Authorization"] = "Bearer " + appStore.userInfo.token;
+        }
         return config
     },
     (error) => {
@@ -23,7 +24,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(async (res) => {
     return res
 }, async (error) => {
-    return error
+    return error.response
 })
 
 export interface ResType<T> {
@@ -61,6 +62,7 @@ const http: Http = {
             axios
                 .post(url, JSON.stringify(params))
                 .then((res) => {
+                    console.log(res);
                     NProgress.done()
                     resolve(res.data)
                 })

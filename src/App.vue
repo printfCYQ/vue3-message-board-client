@@ -1,7 +1,9 @@
 <template>
-  <n-config-provider :theme="appStore.theme ? '' : darkTheme">
+  <n-config-provider :theme="appStore.theme ? {} : darkTheme">
     <n-message-provider>
-      <Layout />
+      <n-dialog-provider>
+        <Layout />
+      </n-dialog-provider>
     </n-message-provider>
   </n-config-provider>
 </template>
