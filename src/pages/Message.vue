@@ -73,7 +73,6 @@ const query = async () => {
     }
 }
 const showCardDetail = (item: any) => {
-    console.log(item);
     messageDetail.value.cardInfo = item
     messageDetail.value.show = true
 }

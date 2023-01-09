@@ -97,7 +97,6 @@ const loginSubmit = (e: MouseEvent) => {
 }
 
 const modalClose = () => {
-    console.log(123);
     loginForm.value.email = ''
     loginForm.value.password = ''
 }

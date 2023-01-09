@@ -10,7 +10,7 @@ export interface QueryMessage {
     type: number
 }
 
-export interface IUserApi {
+export interface IMessageApi {
     addMessage: (params: Message) => Promise<any>
     getMessage: (params: QueryMessage) => Promise<any>
     delMessage: (id: number) => Promise<any>

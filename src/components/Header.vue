@@ -54,7 +54,6 @@ const openUrl = (url: string) => {
 }
 const loginOrLogout = async () => {
     // message.warning('正在开发～')
-    console.log(appStore.userInfo.token);
     if (appStore.userInfo.token === '') {
         instance?.proxy?.$Bus.emit('show-login-form')
     } else {
@@ -71,7 +70,6 @@ const loginOrLogout = async () => {
                 }
             },
         })
-
     }
 }
 

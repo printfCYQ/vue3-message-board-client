@@ -5,6 +5,7 @@ import { defineStore } from 'pinia';
 interface UserInfo {
     userName: string
     token: string
+    id: number
 }
 interface AppStateType {
     count: number,
@@ -18,7 +19,8 @@ export const useAppStore = defineStore('app', {
             theme: true, // true:'light', false:'dark'
             userInfo: {
                 userName: '',
-                token: ''
+                token: '',
+                id: -1,
             }
         }
     },
@@ -31,22 +33,25 @@ export const useAppStore = defineStore('app', {
             this.theme ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')
             this.theme = !this.theme
         },
+        resetUserInfo() {
+            this.userInfo.token = ''
+            this.userInfo.userName = ''
+            this.userInfo.id = -1
+        },
         async loginAction(params: LoginForm) {
             const res = await userApi.login(params)
             if (res?.code == 200) {
-                console.log(res);
                 this.userInfo.token = res?.data?.token
                 const userInfo = await userApi.me()
                 this.userInfo.userName = userInfo.userName
+                this.userInfo.id = userInfo.id
             }
             return res
         },
         async logoutAction() {
             const res = await userApi.logout()
             if (res?.code == 200) {
-                console.log(res);
-                this.userInfo.token = ''
-                this.userInfo.userName = ''
+               this.resetUserInfo()
             }
             return res
         }

@@ -2,8 +2,12 @@
 import { useAppStore } from '@/store';
 import type { AxiosRequestConfig } from 'axios';
 import axios from 'axios';
+import { createDiscreteApi } from 'naive-ui';
 import NProgress from 'nprogress';
 
+const { message } = createDiscreteApi(
+    ['message'],
+)
 // 设置请求头和请求路径
 axios.defaults.baseURL = import.meta.env.VITE_APP_BASE_URL
 axios.defaults.timeout = 10000
@@ -24,7 +28,14 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(async (res) => {
     return res
 }, async (error) => {
-    return error.response
+    if (error?.response?.status === 401) {
+        const appStore = useAppStore()
+        message.warning('登陆凭证过期，请重新登陆')
+        appStore.resetUserInfo()
+        return 
+    } else {
+        return error.response
+    }
 })
 
 export interface ResType<T> {
@@ -51,7 +62,6 @@ const http: Http = {
                 })
                 .catch(async (err) => {
                     NProgress.done()
-                    console.log('err', err);
                     reject(err)
                 })
         })
@@ -62,7 +72,6 @@ const http: Http = {
             axios
                 .post(url, JSON.stringify(params))
                 .then((res) => {
-                    console.log(res);
                     NProgress.done()
                     resolve(res.data)
                 })

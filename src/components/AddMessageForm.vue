@@ -120,12 +120,13 @@ const sure = async () => {
         message: messageContent.value
     }
     const res = await messageApi.addMessage(params)
-    console.log(res)
     if (res?.code === 200) {
         message.success(res.message)
+        messageContent.value = ''
+        activeColor.value = 0
+        currentType.value = 0
         show.value = false
         instance?.proxy?.$Bus.emit('query-message-list')
-
     } else {
         message.warning(res.message)
     }

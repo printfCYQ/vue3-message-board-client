@@ -100,7 +100,6 @@ const registerSubmit = (e: MouseEvent) => {
         if (!errors) {
             loading.value = true
             const res: any = await userApi.register(registerForm.value)
-            console.log(res);
             if (res?.code === 200) {
                 showModal.value = false
                 message.success(res.message)
@@ -115,7 +114,6 @@ const registerSubmit = (e: MouseEvent) => {
 }
 
 const modalClose = () => {
-    console.log(123);
     registerForm.value.email = ''
     registerForm.value.userName = ''
     registerForm.value.password = ''
