@@ -16,14 +16,14 @@
                             class="i-ic:sharp-thumb-up-off-alt cursor-pointer text-base  " @click.stop="clickUp" />
                         <div class="ml-1 text-sm">{{ 0 }}</div>
                         <div class="i-ic:baseline-mode-comment cursor-pointer text-base  text-gray-400 ml-2" />
-                        <div class="ml-1 text-sm">{{ 2 }}</div>
+                        <div class="ml-1 text-sm">{{ commentCount }}</div>
                     </div>
                     <div class="text-base font-light">{{ cardInfo.user.userName }}</div>
                 </div>
             </div>
             <div class="mt-5">
                 <n-input v-model:value="comment" :autosize="{ minRows: 3, maxRows: 3 }" type="textarea"
-                    placeholder="基本的 Textarea" />
+                    placeholder="评论～" />
             </div>
             <div class="mt-3">
                 <n-button class="w-full" type="info" @click="submit" :loading="loading">
@@ -77,7 +77,7 @@ const message = useMessage()
 const appStore = useAppStore()
 const show = ref<boolean>(false)
 const cardInfo = ref<any>({})
-const comment = ref<string>('评论～')
+const comment = ref<string>('')
 const loading = ref<boolean>(false)
 const commentCount = ref<number>(0)
 const data = reactive<{
@@ -112,6 +112,7 @@ const submit = async () => {
         const res = await commentApi.addComment({ message: cardInfo.value.id, comment: comment.value })
         if (res.code === 200) {
             message.success(res.message)
+            comment.value = ''
             data.commentList = []
             queryCommentList()
         } else {
